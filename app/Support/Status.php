@@ -45,7 +45,7 @@ class Status
         return match ($status) {
             self::SHIPPED, self::CANCELLED => [self::PLANNED],
             self::DELIVERED => [self::SHIPPED],
-            default => [],
+            default => [null],
         };
     }
 }
