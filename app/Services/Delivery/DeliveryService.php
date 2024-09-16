@@ -9,7 +9,7 @@ use App\Support\Status;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use RonasIT\Support\Services\EntityService;
 
-class ChangeStatus extends EntityService implements ChangeStatusInterface
+class DeliveryService extends EntityService implements ChangeStatusInterface
 {
     public function __construct()
     {

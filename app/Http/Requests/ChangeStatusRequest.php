@@ -32,11 +32,11 @@ class ChangeStatusRequest extends FormRequest
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function deliveryId(): string
+    public function deliveryId(): int
     {
-        return $this->route('delivery');
+        return (int) $this->route('delivery');
     }
 
     /**

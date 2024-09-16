@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Enums\VersionEnum;
 use App\Models\Delivery;
 use App\Observers\DeliveryObserver;
-use App\Services\Delivery\ChangeStatus;
+use App\Services\Delivery\DeliveryService;
 use App\Services\Delivery\ChangeStatusInterface;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Route as RouteFacade;
@@ -70,7 +70,7 @@ class AppServiceProvider extends ServiceProvider
 
         RouteFacade::macro('version', fn (VersionEnum $version) => RouteFacade::prefix('v' . $version->value));
 
-        $this->app->bind(ChangeStatusInterface::class, ChangeStatus::class);
+        $this->app->bind(ChangeStatusInterface::class, DeliveryService::class);
 
         Delivery::observe(DeliveryObserver::class);
     }
