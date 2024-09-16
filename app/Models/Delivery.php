@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use RonasIT\Support\Traits\ModelTrait;
 
 /**
  * Модель доставки
@@ -14,4 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class Delivery extends Model
 {
     use HasFactory;
+    use ModelTrait;
+
+    public $fillable = ['status'];
 }
