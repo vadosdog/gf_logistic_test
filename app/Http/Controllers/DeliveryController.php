@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\DeliveryDelivered;
-use App\Http\Requests\Request;
-use App\Http\Resources\User\UserResource;
 use App\Models\Delivery;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Foundation\Application;
-use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\DeliveryResource;
+use App\Services\DeliveryService;
+use App\Http\Requests\DeliveryStatusRequest;
 
 class DeliveryController extends Controller
 {
-    public function statusChange(Request $request, Delivery $delivery): ResponseFactory|Application|\Illuminate\Http\Response
-    {
-        // Плохой код, просто для первичного прохождения теста
-        $delivery->status = $request->input('status');
-        $delivery->save();
+    protected $deliveryService;
 
-        return response('', Response::HTTP_OK);
+    public function __construct(DeliveryService $deliveryService)
+    {
+        $this->deliveryService = $deliveryService;
     }
+
+    public function statusChange(DeliveryStatusRequest $request, Delivery $delivery)
+    {
+
+        $validated = $request->validated();
+        $newStatus = $validated['status'];
+
+        $result = $this->deliveryService->changeStatus($delivery, $newStatus);
+
+        if (is_array($result) && !$result['success']) {
+            return response()->json(DeliveryResource::errorResponse($result['message']), 400);
+        }
+
+        return new DeliveryResource($result);
+    }
+
+
 }
